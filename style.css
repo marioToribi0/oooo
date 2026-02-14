@@ -1,0 +1,342 @@
+:root {
+    --primary-color: #ffb7b2;
+    --secondary-color: #ff9aa2;
+    --bg-color: #fff0f5;
+    --text-color: #4a4a4a;
+    --accent-color: #ffdac1;
+    --font-heading: 'Dancing Script', cursive;
+    --font-body: 'Montserrat', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Main Experience */
+#main-experience {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, #fff 0%, #ffe6ea 100%);
+}
+
+.gallery-container {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    margin-top: 20px;
+    perspective: 1000px;
+}
+
+.photo-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    padding: 15px 15px 50px 15px;
+    /* Extra bottom padding for caption area */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    transform-origin: center bottom;
+}
+
+/* Polaroid Image */
+.photo-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border: 1px solid #eee;
+    background-color: #f8f8f8;
+}
+
+/* Caption on Polaroid */
+.photo-card p {
+    margin-top: 15px;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: #4a4a4a;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.photo-card:hover {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+    z-index: 100;
+    /* Bring to front on hover mostly for effect */
+}
+
+/* Hearts Background */
+.heart {
+    position: absolute;
+    color: #ff9aa2;
+    /* Fallback */
+    font-size: 20px;
+    top: -10vh;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.end-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.end-message h2 {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    color: #d63384;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .gallery-container {
+        width: 80vw;
+        height: 110vw;
+        /* Keep aspect ratio roughly */
+        max-height: 500px;
+    }
+
+    h1 {
+        font-size: 3rem;
+    }
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    overflow: hidden;
+    /* Prevent scroll for the immersive experience */
+    height: 100vh;
+    width: 100vw;
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s ease-in-out;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Landing Styles */
+#landing {
+    background: radial-gradient(circle, #fff0f5 0%, #ffc1cc 100%);
+    z-index: 10;
+}
+
+.landing-content {
+    text-align: center;
+}
+
+h1 {
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    color: #d63384;
+    /* Deep pink */
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+button {
+    background-color: #d63384;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(214, 51, 132, 0.4);
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(214, 51, 132, 0.6);
+}
+
+/* Music Control */
+.music-control {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+#music-toggle {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: #d63384;
+}
+
+/* Lock Screen */
+#lock-screen {
+    background: radial-gradient(circle, #fff 0%, #ffe6ea 100%);
+}
+
+.chest-container img {
+    width: 250px;
+    transition: transform 0.5s ease;
+    cursor: pointer;
+}
+
+.chest-container img:hover {
+    transform: scale(1.05);
+}
+
+.lock-content {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.lock-content h2 {
+    font-family: var(--font-heading);
+    color: #d63384;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.date-inputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.date-inputs input {
+    width: 90px;
+    padding: 10px;
+    border: 2px solid #ffb7b2;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    outline: none;
+    text-align: center;
+    color: #4a4a4a;
+}
+
+.date-inputs span {
+    font-size: 1.5rem;
+    color: #ffb7b2;
+    font-weight: bold;
+}
+
+#unlock-btn {
+    margin-top: 15px;
+    padding: 10px 25px;
+    font-size: 1rem;
+}
+
+.hint {
+    margin-top: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff9aa2;
+    min-height: 1.5em;
+    /* Prevent layout jump */
+}
+
+.attempts {
+    font-size: 0.9rem;
+    color: #999;
+    margin-top: 5px;
+}
+
+/* Shake animation for wrong answer */
+.shake {
+    animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+/* Final Video Screen */
+#final-video-screen {
+    background: rgba(0, 0, 0, 0.8);
+    /* Darker background for focus */
+    z-index: 200;
+}
+
+.video-letter {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(255, 183, 178, 0.6);
+    max-width: 90%;
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(-2deg);
+}
+
+#final-video {
+    max-height: 70vh;
+    max-width: 100%;
+    width: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: block;
+}
