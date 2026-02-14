@@ -109,6 +109,15 @@ function unlockChest() {
         duration: 0.5,
         ease: "back.out(1.7)",
         onComplete: () => {
+            // Change music to One Republic
+            bgMusic.pause();
+            bgMusic.src = "future_looks_good.mp3";
+            bgMusic.load();
+            bgMusic.play().then(() => {
+                musicPlaying = true;
+                musicToggle.textContent = "🎵";
+            }).catch(e => console.log("Audio switch failed", e));
+
             // Explode hearts or light?
             createHearts(); // Start heart rain early
 
@@ -145,19 +154,29 @@ musicToggle.addEventListener('click', () => {
 
 const phrases = [
     { "image": "1.png", "text": "Cada momento contigo es un regalo..." },
-    { "image": "2.png", "text": "Tu sonrisa ilumina mis días." },
-    { "image": "3.png", "text": "Junto a Molly, hacemos el mejor equipo." },
+    { "image": "IMG_20241012_140700.jpg", "text": "Me encanta coleccionar momentos a tu lado." },
+    { "image": "2.png", "text": "Los momentos que paso contigo me hacen muy feliz." },
+    { "image": "IMG_20241208_141836.jpg", "text": "Tu sonrisa es lo más bonito que tengo." },
     { "image": "4.png", "text": "Eres mi persona favorita en el mundo." },
+    { "image": "PXL_20250727_203348418.jpg", "text": "Eres el regalo más lindo que Dios me dio." },
     { "image": "5.png", "text": "Gracias por tanto amor." },
-    { "image": "6.png", "text": "San Valentín es mejor a tu lado." },
-    { "image": "7.png", "text": "No cambiaría nada de nosotros." },
-    { "image": "8.png", "text": "Eres magia pura, Caroline." },
-    { "image": "9.png", "text": "Contigo todo es más bonito." },
-    { "image": "10.png", "text": "Mi compañera de aventuras." },
-    { "image": "11.png", "text": "Te amo más de lo que las palabras pueden decir." },
+    { "image": "PXL_20250830_231047463.jpg", "text": "Ojalá todos mis días fueran contigo." },
+    { "image": "6.png", "text": "No cambiaría nada de nosotros." },
+    { "image": "IMG_20241221_121333.jpg", "text": "Cada día te quiero muchoo más." },
+    { "image": "7.png", "text": "Cuando me caigo se que puedo confiar en ti." },
+    { "image": "PXL_20250927_224123468.jpg", "text": "Aventuras, risas y mucho amor juntos." },
+    { "image": "8.png", "text": "Cuando no sé que hacer me das la respuesta." },
+    { "image": "PXL_20250928_002300433.NIGHT~2.jpg", "text": "Contigo hasta la noche más oscura brilla." },
+    { "image": "14.png", "text": "Con Molly todo es más lindo." },
+    { "image": "PXL_20251019_201713495.PORTRAIT.jpg", "text": "Simplemente perfecta para mí." },
+    { "image": "9.png", "text": "Te quiero mucho, nunca lo olvides." },
+    { "image": "IMG_20241231_210154.jpg", "text": "Empezar y terminar el año contigo es mi deseo." },
+    { "image": "10.png", "text": "Espero seguir contigo muchoos dias mas." },
+    { "image": "PXL_20251225_165718771.jpg", "text": "Celebrar la vida contigo es mi bendición." },
+    { "image": "11.png", "text": "Le doy gracias a Dios haberte tenido en mi vida." },
     { "image": "12.png", "text": "Por muchos más momentos así." },
-    { "image": "13.png", "text": "Simplemente, tú." },
-    { "image": "14.png", "text": "Feliz Día de San Valentín, mi amor." }
+    { "image": "13.png", "text": "Gracias, por hacerme tan feliz." },
+    { "image": "3.png", "text": "Feliz Día de San Valentín, mi amor." }
 ];
 
 function loadGallery() {
@@ -190,6 +209,9 @@ function loadGallery() {
     });
 
     // Proposal Logic Setup moved to end of flow
+
+    // Start Lyrics Sync immediately when gallery loads
+    syncLyrics();
 }
 
 function throwCard(card) {
@@ -233,6 +255,102 @@ function showFinalVideo() {
 
     // Try to autoplay video
     video.play().catch(e => console.log("Video autoplay failed", e));
+
+    // Hide Lyrics
+    const lyricsContainer = document.getElementById('lyrics-container');
+    gsap.to(lyricsContainer, { opacity: 0, duration: 0.5 });
+}
+
+const lrcContent = `
+[00:15.66]Woke up staring at this, staring at this empty room
+[00:23.51]Looked at, a thousand different pictures that your mother took of you
+[00:30.31]You see, I had this crazy dream last night, this man he talked to me
+[00:38.25]He told me everything that’s good and bad about my history
+[00:45.39]
+[00:45.39]And he said that you are, you are the future
+[00:53.47]He said that you are, you are the future
+[01:00.53]And the future looks good
+[01:08.65]The future looks good
+[01:10.56]
+[01:16.49]Oh, call me anytime and every time you’re losing it
+[01:24.83]And tell me anyone and everyone that makes you feel like ****
+[01:32.38]Because you know anybody, everybody else can lie
+[01:39.03]But honey, I won’t see you with a, see you with a broken set of eyes
+[01:47.65]
+[01:47.65]And I swear that you are, you are the future
+[01:55.02]I said that you are, you are the future
+[02:02.66]And the future looks good (Oh yeah)
+[02:09.36]The future looks good (Oh yeah)
+[02:16.73]
+[02:33.45]The future looks good (Oh yeah)
+[02:41.39]The future looks good (Oh yeah)
+[02:47.79]
+[02:47.79]Ooh
+[02:52.04]Ooh
+[02:53.83]Ooh
+[02:57.81]Ooh
+[02:59.71]Ooh
+[03:01.63]Ooh
+[03:03.83]
+[03:05.83]Woke up staring at this, staring at this empty room
+[03:13.47]Looked at a thousand different pictures that your mother took of you
+[03:21.53]
+`;
+
+// Parse LRC
+const lyricsData = lrcContent.split('\n').filter(line => line.trim() !== '').map(line => {
+    const timeRegex = /\[(\d{2}):(\d{2}\.\d{2})\]/;
+    const match = line.match(timeRegex);
+    if (match) {
+        const minutes = parseInt(match[1]);
+        const seconds = parseFloat(match[2]);
+        const time = minutes * 60 + seconds;
+        const text = line.replace(timeRegex, '').trim();
+        return { time, text };
+    }
+    return null;
+}).filter(item => item !== null);
+
+function syncLyrics() {
+    const lyricsContainer = document.getElementById('lyrics-container');
+    const audio = document.getElementById('bg-music');
+
+    audio.addEventListener('timeupdate', () => {
+        const currentTime = audio.currentTime;
+        const delay = 0; // 5 seconds delay
+        const adjustedTime = Math.max(0, currentTime - delay);
+
+        // Find current line
+        const currentLine = lyricsData.find((line, index) => {
+            const nextLine = lyricsData[index + 1];
+            return adjustedTime >= line.time && (!nextLine || adjustedTime < nextLine.time);
+        });
+
+        if (currentLine) {
+            if (lyricsContainer.textContent !== currentLine.text) {
+                // Exit current text
+                gsap.to(lyricsContainer, {
+                    opacity: 0,
+                    y: -20,
+                    filter: "blur(10px)",
+                    duration: 0.5,
+                    onComplete: () => {
+                        lyricsContainer.textContent = currentLine.text;
+                        // Animate in new text
+                        gsap.fromTo(lyricsContainer,
+                            { opacity: 0, y: 20, filter: "blur(10px)" },
+                            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, ease: "power2.out" }
+                        );
+                    }
+                });
+            }
+        } else {
+            // If no current line (instrumental or silence), fade out
+            if (lyricsContainer.style.opacity == 1) {
+                gsap.to(lyricsContainer, { opacity: 0, duration: 0.5 });
+            }
+        }
+    });
 }
 
 
@@ -285,6 +403,19 @@ if (urlParams.has('debug') && urlParams.get('debug') === 'gallery') {
     landing.classList.add('hidden');
     lockScreen.classList.add('hidden');
     mainExperience.classList.remove('hidden');
+
+    // Switch to correct music for gallery
+    bgMusic.src = "future_looks_good.mp3";
+    bgMusic.load();
+
     loadGallery();
-    bgMusic.play().catch(e => console.log("User interaction needed for audio"));
+
+    // Attempt play (might need interaction)
+    bgMusic.play().then(() => {
+        musicPlaying = true;
+        musicToggle.textContent = '🎵';
+    }).catch(e => {
+        console.log("User interaction needed for audio", e);
+        // Optional: Add a visible button to force start if needed
+    });
 }
